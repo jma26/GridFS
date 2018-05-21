@@ -6,6 +6,15 @@ var fs = require('fs');
 var path = require('path');
 // Connect to mongoose
 mongoose.connect('mongodb://localhost:27017/gridFS');
+// Listen for mongoose connection and send connection status
+// If connection is open
+mongoose.connection.on('open', function() {
+  console.log('Successful connection to MongoDB server');
+})
+// If connection is closed
+mongoose.connection.on('error', function(error) {
+  console.log('Could not connect to MongoDB server');
+});
 // create a variable that points to the path where all of the models live
 var models_path = path.join(__dirname, './../models');
 // Use native promises
