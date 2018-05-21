@@ -1,3 +1,5 @@
+// Require gridfs
+const Grid = require('gridfs-stream');
 // Require mongoose
 var mongoose = require('mongoose');
 // require the fs module for loading model files
@@ -6,11 +8,14 @@ var fs = require('fs');
 var path = require('path');
 // Connect to mongoose
 mongoose.connect('mongodb://localhost:27017/gridFS');
+Grid.mongo = mongoose.mongo;
 // Listen for mongoose connection and send connection status
 // If connection is open
 mongoose.connection.on('open', function() {
   console.log('Successful connection to MongoDB server');
-})
+  // Connect gridFS-stream to mongodb
+  var gfs = Grid(mongoose.connection.db);
+});
 // If connection is closed
 mongoose.connection.on('error', function(error) {
   console.log('Could not connect to MongoDB server');
