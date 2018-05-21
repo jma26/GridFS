@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
 const path = require('path');
 
 // Initialize express
@@ -18,6 +20,19 @@ app.use(express.static(path.join(__dirname, '/gridfsAng/dist')));
 
 // Require routes.js for server routing
 const route = require('./server/config/routes.js')(app);
+
+// Set up multer-gridfs-storage
+const storage = new GridFsStorage({
+    url: 'mongodb://localhost:27017/gridFS',
+    file: function(request, file) {
+        return 'file_' + Date.now();
+    }
+})
+
+// Configure multer for single upload
+const upload = multer({
+    storage: storage
+}).single('image');
 
 // Catch all route to Angular
 app.all("*", function(request, response, next) {
