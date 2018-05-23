@@ -4,8 +4,15 @@
       <h1 class="text-center"> Uploading to MongoDB with GridFS &amp; Multer </h1>
       <form action="/upload" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" id="file">
-        <label for="file"> Choose File </label>
-        <input type="submit" value="Submit" class="btn btn-primary btn-block"> 
+        <div class="form-section">
+          <label name="title" id="title"> Title </label>
+          <input type="text" for="title">
+        </div>
+        <div class="form-section">
+          <label name="author" id="author"> Author </label>
+          <input type="text" for="author">
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary btn-block">
       </form>
     </div>
   </div>
