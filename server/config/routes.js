@@ -41,8 +41,8 @@ module.exports = function(app) {
                 response.json({error: error});
             }
             console.log(files);
+            response.render('home', {files: files});
         })
-        response.render('home');
     });
     // @route POST /upload
     app.post('/upload', function(request, response) {
@@ -56,8 +56,8 @@ module.exports = function(app) {
                     title: title,
                     author: author
                 }
-                console.log('Successful upload');
-                response.render('home');
+                console.log(`${request.file} successfully uploaded`);
+                response.send('root');
             }
         })
     });
