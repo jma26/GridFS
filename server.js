@@ -8,6 +8,8 @@ const app = express();
 
 // Set View engine
 app.set('view engine', 'ejs');
+// Server static files
+app.use(express.static(__dirname + '/public'));
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
