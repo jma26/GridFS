@@ -19,10 +19,7 @@ module.exports = function(app) {
 
     // Set up multer-gridfs-storage
     const storage = new GridFsStorage({
-        url: 'mongodb://localhost:27017/gridFS',
-        file: function(request, file) {
-            return `File_${Date.now()}`;
-        }
+        url: 'mongodb://localhost:27017/gridFS'
     })
 
     // Configure multer for single upload
@@ -38,11 +35,13 @@ module.exports = function(app) {
         gfs.files.find().toArray(function(error, files) {
             // Check if files exist
             if (!files || files.length === 0) {
-                response.json({error: error});
+                response.render('home', {files : false});
+                console.log('No files round');
+            } else {
+                console.log(files);
+                response.render('home', {files: files});
             }
-            console.log(files);
-            response.render('home', {files: files});
-        })
+        });
     });
     // @route POST /upload
     app.post('/upload', function(request, response) {
@@ -50,14 +49,26 @@ module.exports = function(app) {
             if (error) {
                 response.json({status: 400, error: error});
             } else {
-                let title = request.body.title;
-                let author = request.body.author;
-                request.file.metadata = {
-                    title: title,
-                    author: author
+                if (request.file && request.file.id) {
+                    let title = request.body.title;
+                    let author = request.body.author;
+                    gfs.files.update({
+                        _id: request.file.id
+                    }, {$set: {
+                        metadata: {
+                            author: author,
+                            title: title
+                        }
+                    }}, function(error, update) {
+                        if (error) {
+                            console.log('Update error');
+                        } else {
+                            console.log('Update successful');
+                        }
+                    })
                 }
-                console.log(`${request.file} successfully uploaded`);
-                response.send('root');
+                console.log(`File successfully uploaded`);
+                response.redirect('/');
             }
         })
     });
