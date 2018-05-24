@@ -1,7 +1,6 @@
 const Grid = require('gridfs-stream');
 const GridFsStorage = require('multer-gridfs-storage');
 const mongoose = require('mongoose');
-const mongoosery = require('./mongoose.js');
 const multer = require('multer');
 
 module.exports = function(app) {
