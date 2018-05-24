@@ -15,9 +15,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Require mongoose.js to connect to mongoDB
-require('./server/config/mongoose.js');
-
 // Require routes.js for server routing
 const route = require('./server/config/routes.js')(app);
 
