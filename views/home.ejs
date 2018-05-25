@@ -31,8 +31,11 @@
             <div class="col-6">
                 <% if (files) { %>
                     <% files.forEach(function(file) { %>
-                        <%= file.filename %>
+                        <img src="image/<%= file.filename %>" alt="">
+                        <h2> <%= file.filename %> </h2>
                     <% }) %>
+                <% } else if (!files) { %>
+                    <h2> No Files found </h2>
                 <% } %>
             </div>
         </div>
