@@ -34,12 +34,13 @@
                     <% files.forEach(function(file) { %>
                     <div class="card card-body w-50">
                         <img class="card-img-top" src="image/<%= file.filename %>" alt="<%= file.metadata.title %>">
-                        <h2 class="card-text"> <%= file.filename %> </h2>
+                        <h4 class="card-text"> <%= file.filename %> </h4>
+                        <h4 class="card-text"> Title: <%= file.metadata.title %> </h4>
                     </div>
                     <% }) %>
                         <% } else { %>
                             <h2> No Files found </h2>
-                        <% } %>
+                <% } %>
             </div>
         </div>
     </div>
